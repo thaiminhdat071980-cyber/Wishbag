@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
+  <title>Wishbag — Phụ Kiện Thời Trang & Dự Án Thiện Nguyện</title>
+  <meta name="description" content="Wishbag cung cấp những mẫu túi xách độc đáo, thời trang — giao hàng nhanh chóng và đồng hành cùng các hoạt động thiện nguyện vùng cao.">
+  <meta name="keywords" content="túi xách, túi thời trang, wishbag, cửa hàng túi xách, túi xách thiện nguyện">
+  <meta name="author" content="Wishbag">
+
+  <!-- Open Graph / Facebook / Zalo Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Wishbag — Phụ Kiện Thời Trang & Dự Án Thiện Nguyện">
+  <meta property="og:description" content="Mỗi chiếc túi bạn chọn tại Wishbag đều góp phần trao hy vọng đến trẻ em khó khăn vùng cao.">
+  <meta property="og:image" content="480310326_122100816464768937_246419539453401985_n.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a href="#top" class="logo" aria-label="Trang chủ Wishbag" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="480310326_122100816464768937_246419539453401985_n.jpg" alt="Túi xách thời trang Wishbag Logo" class="brand-logo" width="52" height="52" onerror="this.style.display='none';">
+        <span class="logo-text">Wishbag</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <ul>
+          <li><a href="#top">Trang chủ</a></li>
+          <li><a href="#about">Về chúng tớ</a></li>
+          <li><a href="#shop">Sản phẩm</a></li>
+          <li><a href="#contact">Liên hệ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <div class="search-bar">
+          <svg class="search-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <label for="search-input" class="visually-hidden">Tìm kiếm sản phẩm</label>
+          <input type="search" id="search-input" placeholder="Tìm kiếm sản phẩm…" autocomplete="off">
+        </div>
+
+        <button type="button" class="cart-btn" id="cart-open-btn" aria-label="Mở giỏ hàng, 0 sản phẩm">
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.8h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/>
+            <circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/>
+          </svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </button>
+
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="main-nav-mobile">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="main-nav-mobile" id="main-nav-mobile" aria-label="Mobile">
+      <ul>
+        <li><a href="#top">Trang chủ</a></li>
+        <li><a href="#about">Về chúng tớ</a></li>
+        <li><a href="#shop">Sản phẩm</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero" id="hero">
+      <div class="hero-slider-container">
+        <div class="hero-slide active" style="background-image: url('519612642_122145079550768937_4256844855367018779_n.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('591125505_17886673761407990_3895812778840192691_n.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('IMG_2168.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('IMG_2161.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('DSC_0222.jpg');"></div>
+        <div class="slider-overlay"></div>
+      </div>
+
+      <button class="slider-nav prev" aria-label="Ảnh trước">&#10094;</button>
+      <button class="slider-nav next" aria-label="Ảnh sau">&#10095;</button>
+
+      <div class="slider-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+        <span class="dot" data-index="3"></span>
+        <span class="dot" data-index="4"></span>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Túi xách thời trang & Ý nghĩa</p>
+          <h1>Phụ kiện không thể thiếu<br>cho phong cách của bạn.</h1>
+          <p class="hero-tagline">Chúng tớ là Wish Bag và chúng tớ mong muốn được cùng lan toả, kết nối tấm lòng của mình đến những em nhỏ bước trên miền núi cao ấy bằng cả trái tim, hành động và tinh thần "Thiện nguyện & Nhân văn".</p>
+          <a href="#shop" class="btn btn-primary btn-large">Mua Ngay</a>
+
+          <ul class="trust-badges">
+            <li>
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 13V7a1 1 0 0 1 1-1h9v9H4a1 1 0 0 1-1-1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10h4l4 4v2a1 1 0 0 1-1 1h-1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7.5" cy="18" r="1.8" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="18" r="1.8" stroke="currentColor" stroke-width="1.6"/></svg>
+              Giao Hàng Toàn Quốc
+            </li>
+            <li>
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.6 15a8 8 0 1 0 1.7-8.4L4 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Đổi Trả 7 Ngày
+            </li>
+            <li>
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Hỗ Trợ 24/7
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orb"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-inner">
+        <h2>Mỗi chiếc túi. Một tấm lòng sẻ chia.</h2>
+        <p>Không chỉ là một phụ kiện thời trang, mỗi sản phẩm bạn chọn tại đây đều góp phần trực tiếp vào các quỹ hỗ trợ cộng đồng và mang lại hy vọng cho những hoàn cảnh khó khăn.</p>
+      </div>
+    </section>
+
+    <section class="shop" id="shop">
+      <div class="shop-inner">
+        <div class="shop-header">
+          <h2>Khám phá danh mục</h2>
+          <p>Các sản phẩm được chọn lọc thủ công. Sắp xếp theo giá trị.</p>
+        </div>
+
+        <div class="shop-controls">
+          <div class="category-tabs" role="tablist" aria-label="Lọc theo danh mục">
+            <button type="button" class="tab-btn is-active" data-category="all" role="tab" aria-selected="true">Tất cả</button>
+            <button type="button" class="tab-btn" data-category="𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀" role="tab" aria-selected="false">𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀</button>
+            <button type="button" class="tab-btn" data-category="Summer Threads" role="tab" aria-selected="false">Summer Threads</button>
+          </div>
+
+          <div class="sort-control">
+            <label for="sort-select">Sắp xếp</label>
+            <select id="sort-select">
+              <option value="default">Nổi bật</option>
+              <option value="price-asc">Giá: Thấp đến Cao</option>
+              <option value="price-desc">Giá: Cao đến Thấp</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="visually-hidden" id="results-status" role="status" aria-live="polite"></p>
+
+        <div class="product-grid" id="product-grid"></div>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <h3>Không có sản phẩm nào khớp với tìm kiếm</h3>
+          <p>Hãy thử một từ khóa khác hoặc xóa bộ lọc để xem toàn bộ danh mục.</p>
+          <button type="button" class="btn btn-secondary" id="empty-state-reset">Xóa bộ lọc</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Cart Drawer Overlay & Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Giỏ hàng" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h2>Giỏ Hàng Của Bạn</h2>
+      <button type="button" class="icon-btn" id="cart-close-btn" aria-label="Đóng giỏ hàng">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer-body" id="cart-items-container">
+      <div class="cart-empty" id="cart-empty-state">
+        <svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.8h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
+        <h3>Giỏ hàng của bạn đang trống</h3>
+        <p>Hãy thêm một vài sản phẩm — chúng sẽ xuất hiện ở đây.</p>
+        <a href="#shop" class="btn btn-primary" id="cart-empty-shop-link">Khám phá sản phẩm</a>
+      </div>
+      <ul class="cart-items" id="cart-items-list"></ul>
+    </div>
+
+    <div class="cart-drawer-footer" id="cart-footer" hidden>
+      <div class="cart-summary-row">
+        <span>Tạm tính</span>
+        <span id="cart-subtotal">0 VNĐ</span>
+      </div>
+      <div class="cart-summary-row">
+        <span>Phí vận chuyển dự kiến</span>
+        <span id="cart-shipping">0 VNĐ</span>
+      </div>
+      <div class="cart-summary-row cart-summary-total">
+        <span>Tổng cộng</span>
+        <span id="cart-total">0 VNĐ</span>
+      </div>
+      <button type="button" class="btn btn-primary btn-full" id="checkout-btn">Thanh Toán</button>
+    </div>
+  </aside>
+
+  <!-- Checkout Modal -->
+  <div class="checkout-overlay" id="checkout-overlay" hidden>
+    <div class="checkout-modal" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <div class="checkout-header">
+        <h2 id="checkout-title">Thông Tin Thanh Toán</h2>
+        <button type="button" class="icon-btn" id="checkout-close-btn" aria-label="Đóng">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <form id="checkout-form" class="checkout-body">
+        <div class="form-group">
+          <label for="co-name">Họ và Tên *</label>
+          <input type="text" id="co-name" required placeholder="Nhập họ và tên người nhận">
+        </div>
+        <div class="form-group">
+          <label for="co-phone">Số điện thoại *</label>
+          <input type="tel" id="co-phone" required placeholder="Nhập số điện thoại (ví dụ: 0912345678)">
+          <span class="error-msg" id="phone-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="co-address">Địa chỉ giao hàng *</label>
+          <input type="text" id="co-address" required placeholder="Số nhà, tên đường, Phường/Xã, Quận/Huyện...">
+        </div>
+
+        <div class="form-group">
+          <label>Phương thức thanh toán *</label>
+          <div class="payment-options">
+            <label class="payment-radio">
+              <input type="radio" name="payment_method" value="cod" checked>
+              <span>Thanh toán tiền mặt khi nhận hàng (COD)</span>
+            </label>
+            <label class="payment-radio">
+              <input type="radio" name="payment_method" value="transfer">
+              <span>Thanh toán chuyển khoản qua mã QR</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="transfer-info" class="transfer-info-section" hidden>
+          <p class="transfer-note">Vui lòng quét mã QR bên dưới để thanh toán và tải lên ảnh chụp chuyển khoản thành công.</p>
+          <div class="qr-container">
+            <img src="download.jpg" alt="Mã QR Chuyển Khoản Wishbag" class="qr-image" width="180" height="180">
+          </div>
+          <div class="form-group mt-3">
+            <label for="co-receipt">Tải lên ảnh biên lai chuyển khoản *</label>
+            <input type="file" id="co-receipt" accept="image/*">
+          </div>
+        </div>
+
+        <div class="checkout-footer">
+          <button type="submit" class="btn btn-primary btn-full" id="submit-order-btn">Xác Nhận Đặt Hàng</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Quick View Modal (Đã chuyển vào bên trong body) -->
+  <div class="quickview-overlay" id="quickview-overlay" hidden>
+    <div class="quickview-modal" id="quickview-modal" role="dialog" aria-modal="true">
+      <button type="button" class="icon-btn close-quickview" id="quickview-close-btn" aria-label="Đóng chi tiết">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="quickview-content">
+        <div class="quickview-image-container">
+          <img id="qv-image" src="" alt="Sản phẩm Wishbag" class="crop-ui">
+        </div>
+        <div class="quickview-info">
+          <span id="qv-category" class="product-category"></span>
+          <h3 id="qv-title" class="product-title" style="font-size: 2rem; margin-bottom: 0.5rem;"></h3>
+          <p id="qv-price" class="product-price" style="font-size: 1.5rem; margin-bottom: 1rem;"></p>
+          
+          <div class="qv-variants" id="qv-variants-container" style="margin-bottom: 1rem;">
+            <label style="font-weight: 600; font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Màu sắc chọn lựa:</label>
+            <div class="color-options" id="qv-color-options"></div>
+          </div>
+
+          <p id="qv-desc" class="product-desc" style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;"></p>
+          <button type="button" class="btn btn-primary btn-full" id="qv-add-cart" data-action="add-to-cart" data-product-id="">Thêm vào giỏ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <footer class="site-footer" id="contact">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+          <img src="480310326_122100816464768937_246419539453401985_n.jpg" alt="Wishbag Logo Footer" class="brand-logo" width="48" height="48" onerror="this.style.display='none';">
+          <span class="logo-text-footer" style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: bold; color: var(--color-text-inverse);">Wishbag</span>
+        </div>
+        <p>Một chiếc túi nhỏ có thể chứa cả yêu thương, văn hóa và tương lai bền vững. Hãy cùng Wish Bag trao hy vọng đến trẻ em khó khăn – từ miền xuôi đến miền ngược, từ tay bạn đến trái tim các em.</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Kênh Liên Hệ</h3>
+        <ul class="footer-list contact-inline">
+          <li>Gmail: <a href="mailto:wishbagvn@gmail.com">wishbagvn@gmail.com</a></li>
+          <li>Instagram: <a href="https://instagram.com/wishbagvn" target="_blank" rel="noopener">@wishbagvn</a></li>
+          <li>TikTok: <a href="https://www.tiktok.com/@wishbag" target="_blank" rel="noopener">@wishbag</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Chính Sách Cửa Hàng</h3>
+        <ul class="footer-list">
+          <li><a href="#">Thông Tin Giao Hàng</a></li>
+          <li><a href="#">Đổi & Trả Hàng</a></li>
+          <li><a href="#">Bảo Hành Sản Phẩm</a></li>
+          <li><a href="#">Chính Sách Bảo Mật</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-newsletter">
+        <h3>Nhận thông tin mới nhất</h3>
+        <p>Chỉ gửi tin tức về bộ sưu tập mới và các hoạt động thiện nguyện.</p>
+        <form class="newsletter-form" id="newsletter-form">
+          <label for="newsletter-email" class="visually-hidden">Địa chỉ email</label>
+          <input type="email" id="newsletter-email" placeholder="ban@email.com" required>
+          <button type="submit" class="btn btn-primary">Đăng Ký</button>
+        </form>
+        <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Wishbag. Đã đăng ký bản quyền.</p>
+    </div>
+  </footer>
+
+  <button type="button" id="back-to-top" class="back-to-top" aria-label="Lên đầu trang">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
