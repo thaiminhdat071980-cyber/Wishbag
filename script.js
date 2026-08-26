@@ -9,7 +9,8 @@ const PRODUCTS = [
   { id: 'p03', name: 'Pinky Promise', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Pinky Promise.jpg', description: 'Wishbag' },
   { id: 'p04', name: 'Aloha', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Aloha.jpg', description: 'Wishbag', adjustImage: true },
   { id: 'p05', name: 'Gentle Giant', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Gentle Giant.jpg', description: 'Wishbag', adjustImage: true },
-  { id: 'p06', name: 'Ripple', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag', adjustImage: true }
+  { id: 'p06', name: 'Ripple', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag', adjustImage: true },
+  { id: 'p07', name: 'Sunny Side', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Sunny Side.jpg', description: 'Wishbag', adjustImage: true }
 ];
 
 const CART_STORAGE_KEY = 'wishbag_cart_v1';
@@ -391,7 +392,7 @@ if (paymentRadios) {
   });
 }
 
-// MỚI: Xử lý gửi dữ liệu đặt hàng thật qua Formspree
+// Xử lý gửi dữ liệu đặt hàng thật qua Formspree
 if (checkoutForm) {
   checkoutForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -580,4 +581,4 @@ if (newsletterForm) {
    Init
    ========================================================================== */
 renderProducts();
-renderCart();
+renderCart();   
