@@ -397,9 +397,44 @@ function saveCheckoutInfo(name, phone, address) {
   } catch (e) {}
 }
 
+/* ==========================================================================
+   Tạo mã QR Động VietQR
+   ========================================================================== */
+function updateQRCode() {
+  // Lấy thông tin tổng tiền từ giỏ hàng
+  const lines = getCartLines();
+  const totals = getCartTotals(lines);
+  const amount = totals.total; // Tổng số tiền cần thanh toán
+
+  // Thông tin tài khoản Vietcombank
+  const bankId = 'vietcombank'; 
+  const accountNo = '1048131877'; 
+  const accountName = 'HOANG NGOC DIEU ANH'; 
+  
+  // Nội dung chuyển khoản mặc định
+  const addInfo = encodeURIComponent('Thanh toan don hang Wishbag');
+  const encodedName = encodeURIComponent(accountName);
+
+  // Tạo URL API của VietQR
+  const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact.png?amount=${amount}&addInfo=${addInfo}&accountName=${encodedName}`;
+
+  // Tìm thẻ img chứa QR trên giao diện và cập nhật đường dẫn ảnh
+  const qrImage = document.querySelector('.qr-image');
+  if (qrImage) {
+    qrImage.src = qrUrl;
+  }
+}
+
+/* ==========================================================================
+   Mở Modal Thanh Toán
+   ========================================================================== */
 function openCheckoutModal() {
   if (checkoutOverlay) {
     loadCheckoutInfo(); 
+    
+    // Gọi hàm cập nhật QR code với số tiền mới nhất
+    updateQRCode(); 
+    
     checkoutOverlay.hidden = false;
     requestAnimationFrame(() => checkoutOverlay.classList.add('is-visible'));
     closeCartDrawer();
