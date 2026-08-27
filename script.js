@@ -11,7 +11,7 @@ const PRODUCTS = [
   { id: 'p04', name: 'Aloha', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Aloha.jpg', description: 'Wishbag', adjustImage: true },
   { id: 'p05', name: 'Gentle Giant', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Gentle Giant.jpg', description: 'Wishbag', adjustImage: true },
   { id: 'p06', name: 'Ripple', price: 129000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag', adjustImage: true },
-  { id: 'p07', name: 'Sunny Side', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'sunnyside.jpg', description: 'Wishbag', adjustImage: true }
+  { id: 'p07', name: 'Sunny Side', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Sunny Side.jpg', description: 'Wishbag', adjustImage: true }
 ];
 
 const CART_STORAGE_KEY = 'wishbag_cart_v1';
