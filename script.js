@@ -7,17 +7,18 @@ const PRODUCTS = [
   { id: 'p01', name: 'Lunar Heart', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lunar Heart.jpg', description: 'Wishbag' },
   { id: 'p02', name: 'Lace Bound', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lace Bound.jpg', description: 'Wishbag' },
   { id: 'p03', name: 'Pinky Promise', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Pinky Promise.jpg', description: 'Wishbag' },
-  { id: 'p04', name: 'Aloha', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Aloha.jpg', description: 'Wishbag', adjustImage: true },
-  { id: 'p05', name: 'Gentle Giant', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Gentle Giant.jpg', description: 'Wishbag', adjustImage: true },
-  { id: 'p06', name: 'Ripple', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag', adjustImage: true },
-  { id: 'p07', name: 'Sunny Side', price: 139000, originalPrice: null, category: 'Summer Threads', image: 'Sunny Side.jpg', description: 'Wishbag', adjustImage: true }
+  { id: 'p08', name: 'Gift Basket', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'gift basket .jpg', description: 'Wishbag', isSoldOut: true },
+  { id: 'p04', name: 'Aloha', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Aloha.jpg', description: 'Wishbag', adjustImage: true },
+  { id: 'p05', name: 'Gentle Giant', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Gentle Giant.jpg', description: 'Wishbag', adjustImage: true },
+  { id: 'p06', name: 'Ripple', price: 129000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag', adjustImage: true },
+  { id: 'p07', name: 'Sunny Side', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'sunnyside.jpg', description: 'Wishbag', adjustImage: true }
 ];
 
 const CART_STORAGE_KEY = 'wishbag_cart_v1';
 const USER_INFO_KEY = 'wishbag_user_info'; 
 const SHIPPING_FLAT_RATE = 30000;
 const FREE_SHIPPING_THRESHOLD = 500000;
-const TOAST_DURATION_MS = 4000; // Tăng thời gian hiển thị lên 4 giây để khách kịp đọc
+const TOAST_DURATION_MS = 4000;
 
 /* ==========================================================================
    State
@@ -82,7 +83,7 @@ const newsletterStatus = document.getElementById('newsletter-status');
 const backToTopBtn = document.getElementById('back-to-top');
 
 /* ==========================================================================
-   Hero Slider Feature (Tự động chuyển ảnh, vuốt & bấm chuyển)
+   Hero Slider Feature (Touch Swipe & Mouse Drag)
    ========================================================================== */
 const slides = document.querySelectorAll('.hero-slide');
 const dots = document.querySelectorAll('.dot');
@@ -108,9 +109,9 @@ function prevSlide() { currentSlide--; showSlide(currentSlide); }
 function startSlideShow() { slideInterval = setInterval(nextSlide, 5000); }
 function stopSlideShow() { clearInterval(slideInterval); }
 
-if(slides.length > 0) {
-  nextBtn.addEventListener('click', () => { nextSlide(); stopSlideShow(); startSlideShow(); });
-  prevBtn.addEventListener('click', () => { prevSlide(); stopSlideShow(); startSlideShow(); });
+if (slides.length > 0 && heroSection) {
+  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); stopSlideShow(); startSlideShow(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); stopSlideShow(); startSlideShow(); });
 
   dots.forEach(dot => {
     dot.addEventListener('click', (e) => {
@@ -120,13 +121,48 @@ if(slides.length > 0) {
     });
   });
 
-  let touchStartX = 0, touchEndX = 0;
-  heroSection.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-  heroSection.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 50) { nextSlide(); stopSlideShow(); startSlideShow(); }
-    if (touchEndX > touchStartX + 50) { prevSlide(); stopSlideShow(); startSlideShow(); }
-  }, {passive: true});
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+
+  const handleStart = (e) => {
+    isDragging = true;
+    startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    currentX = startX;
+    stopSlideShow();
+  };
+
+  const handleMove = (e) => {
+    if (!isDragging) return;
+    currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+  };
+
+  const handleEnd = () => {
+    if (!isDragging) return;
+    const diffX = currentX - startX;
+    const threshold = 40;
+
+    if (Math.abs(diffX) > threshold) {
+      if (diffX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    isDragging = false;
+    startX = 0;
+    currentX = 0;
+    startSlideShow();
+  };
+
+  heroSection.addEventListener('touchstart', handleStart, { passive: true });
+  heroSection.addEventListener('touchmove', handleMove, { passive: true });
+  heroSection.addEventListener('touchend', handleEnd);
+
+  heroSection.addEventListener('mousedown', handleStart);
+  heroSection.addEventListener('mousemove', handleMove);
+  heroSection.addEventListener('mouseup', handleEnd);
+  heroSection.addEventListener('mouseleave', () => { if (isDragging) handleEnd(); });
 
   startSlideShow(); 
 }
@@ -148,14 +184,35 @@ function getVisibleProducts() {
 
 function renderProductCard(product) {
   const isOnSale = typeof product.originalPrice === 'number' && product.originalPrice > product.price;
+  const isSoldOut = product.isSoldOut === true; 
+
   const priceOriginalMarkup = isOnSale ? `<span class="product-price-original">${formatMoney(product.originalPrice)}</span>` : '';
-  const badgeMarkup = isOnSale ? `<span class="product-badge">Sale</span>` : '';
+  
+  let badgeMarkup = '';
+  let soldOutStampMarkup = '';
+
+  if (isSoldOut) {
+    badgeMarkup = `<span class="product-badge sold-out-badge">Hết Hàng</span>`;
+    soldOutStampMarkup = `<div class="sold-out-stamp">SOLD OUT</div>`;
+  } else if (isOnSale) {
+    badgeMarkup = `<span class="product-badge">Sale</span>`;
+  }
+
   const imgClass = product.adjustImage ? 'crop-ui' : '';
+  const cardClass = isSoldOut ? 'product-card is-sold-out' : 'product-card';
+
+  const buttonMarkup = isSoldOut
+    ? `<button type="button" class="add-to-cart-btn sold-out-btn" disabled>Hết hàng</button>`
+    : `<button type="button" class="add-to-cart-btn" data-action="add-to-cart" data-product-id="${sanitize(product.id)}" aria-label="Thêm ${sanitize(product.name)} vào giỏ">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.8h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
+        Thêm vào giỏ
+      </button>`;
 
   return `
-    <article class="product-card" data-product-id="${sanitize(product.id)}">
+    <article class="${cardClass}" data-product-id="${sanitize(product.id)}">
       <div class="product-media">
         ${badgeMarkup}
+        ${soldOutStampMarkup}
         <img src="${sanitize(product.image)}" alt="${sanitize(product.name)}" class="${imgClass}" loading="lazy" width="400" height="400" onerror="this.src='https://via.placeholder.com/400x400?text=Wishbag';">
       </div>
       <div class="product-body">
@@ -166,10 +223,7 @@ function renderProductCard(product) {
           <span class="product-price">${formatMoney(product.price)}</span>
           ${priceOriginalMarkup}
         </div>
-        <button type="button" class="add-to-cart-btn" data-action="add-to-cart" data-product-id="${sanitize(product.id)}" aria-label="Thêm ${sanitize(product.name)} vào giỏ">
-          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.8h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/></svg>
-          Thêm vào giỏ
-        </button>
+        ${buttonMarkup}
       </div>
     </article>
   `;
@@ -263,8 +317,6 @@ function addToCart(productId) {
   const existing = cart.find(entry => entry.id === productId);
   if (existing) existing.quantity += 1; else cart.push({ id: productId, quantity: 1 });
   renderCart(); pulseCartBadge(); 
-  
-  // Thông báo giỏ hàng xịn xò
   showToast(`✅ Đã thêm ${product.name} vào giỏ!`);
 }
 
@@ -289,7 +341,6 @@ function showToast(message) {
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.setAttribute('role', 'status');
-  // Icon tick thành công mới
   toast.innerHTML = `<span class="toast-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>${sanitize(message)}</span>`;
   toastContainer.appendChild(toast);
   requestAnimationFrame(() => toast.classList.add('is-visible'));
@@ -392,7 +443,6 @@ if (paymentRadios) {
   });
 }
 
-// Xử lý gửi dữ liệu đặt hàng thật qua Formspree
 if (checkoutForm) {
   checkoutForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -581,4 +631,4 @@ if (newsletterForm) {
    Init
    ========================================================================== */
 renderProducts();
-renderCart();   
+renderCart();
