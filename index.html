@@ -194,7 +194,6 @@
 
   </main>
 
-  <!-- Cart Drawer -->
   <div class="drawer-overlay" id="drawer-overlay" hidden></div>
   <aside class="cart-drawer" id="cart-drawer" aria-label="Giỏ hàng" aria-hidden="true">
     <div class="cart-drawer-header">
@@ -231,7 +230,6 @@
     </div>
   </aside>
 
-  <!-- Checkout Modal -->
   <div class="checkout-overlay" id="checkout-overlay" hidden>
     <div class="checkout-modal" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
       <div class="checkout-header">
@@ -291,12 +289,16 @@
             <img src="" alt="Mã QR Chuyển Khoản Wishbag" class="qr-image">
           </div>
           <div class="form-group mt-3" id="receipt-upload-group">
-            <label for="co-receipt">Tải lên ảnh biên lai chuyển khoản *</label>
+            <label for="co-receipt">Tải lên ảnh biên lai chuyển khoản (Không bắt buộc)</label>
             <input type="file" id="co-receipt" accept="image/*">
           </div>
         </div>
 
         <div class="checkout-footer">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; padding-top: 1rem; border-top: 1px dashed var(--color-border-strong);">
+            <span>Thành tiền:</span>
+            <span id="checkout-modal-total" style="color: var(--color-primary); font-size: 1.25rem;">0 VNĐ</span>
+          </div>
           <button type="submit" class="btn btn-primary btn-full" id="submit-order-btn">Xác Nhận Đặt Hàng</button>
         </div>
       </form>

@@ -83,6 +83,8 @@ const menuToggle = document.getElementById('menu-toggle');
 const mobileNav = document.getElementById('main-nav-mobile');
 const backToTopBtn = document.getElementById('back-to-top');
 
+const checkoutModalTotal = document.getElementById('checkout-modal-total');
+
 /* ==========================================================================
    Hero Slider
    ========================================================================== */
@@ -233,7 +235,10 @@ function renderCart() {
     if (cartFooter) cartFooter.hidden = false;
     if (cartSubtotalEl) cartSubtotalEl.textContent = formatMoney(totals.subtotal);
     if (cartShippingEl) cartShippingEl.textContent = totals.shipping === 0 ? 'Miễn phí' : formatMoney(totals.shipping);
+    
+    // Cập nhật giá trị hiển thị thành tiền
     if (cartTotalEl) cartTotalEl.textContent = formatMoney(totals.total);
+    if (checkoutModalTotal) checkoutModalTotal.textContent = formatMoney(totals.total);
   }
   saveCart();
 }
@@ -351,10 +356,10 @@ if (orderTypeRadios) {
 
         if(labelCodText) labelCodText.textContent = 'Thanh toán tiền mặt khi nhận hàng (COD)';
         
-        // Nếu đang chọn chuyển khoản thì phải hiện lại nút upload biên lai
+        // Nếu đang chọn chuyển khoản thì phải hiện lại nút upload biên lai (không bắt buộc nữa)
         if (document.querySelector('input[name="payment_method"]:checked').value === 'transfer') {
           if(receiptUploadGroup) receiptUploadGroup.style.display = 'block';
-          if(coReceipt) coReceipt.required = true;
+          if(coReceipt) coReceipt.required = false;
         }
       }
     });
@@ -367,10 +372,10 @@ if (paymentRadios) {
     radio.addEventListener('change', (e) => {
       if (e.target.value === 'transfer') {
         if(transferInfo) transferInfo.hidden = false;
-        // Chỉ bắt upload biên lai nếu là Giao tận nơi
+        // Chỉ hiện nút upload biên lai nếu là Giao tận nơi (không bắt buộc)
         if (!isAtBooth) {
           if(receiptUploadGroup) receiptUploadGroup.style.display = 'block';
-          if(coReceipt) coReceipt.required = true;
+          if(coReceipt) coReceipt.required = false;
         } else {
           if(receiptUploadGroup) receiptUploadGroup.style.display = 'none';
           if(coReceipt) coReceipt.required = false;
