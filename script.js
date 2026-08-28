@@ -55,6 +55,15 @@ function saveCart() {
 }
 function findProduct(id) { return PRODUCTS.find(p => p.id === id); }
 
+function saveCheckoutInfo(name, phone, address) {
+  try {
+    const info = { name, phone, address };
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(info));
+  } catch (e) {
+    console.error("Không thể lưu thông tin:", e);
+  }
+}
+
 /* ==========================================================================
    DOM references
    ========================================================================== */
@@ -436,8 +445,9 @@ if (checkoutForm) {
       }).join(' | ')
     };
 
-    fetch("https://formspree.io/f/mzdnyylo", {
-      method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" },
+    fetch("https://script.google.com/macros/s/AKfycbwyXGj5f6qObPV21D8TYzOV4JNr8UB0Tyh1FDtdw17-tmH-Ljm97wg1ZhGhkFqArNMzkQ/exec", {
+      method: "POST", 
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(orderData)
     }).then(response => {
       if (response.ok) {
