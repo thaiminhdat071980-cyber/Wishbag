@@ -9,7 +9,6 @@
   <meta name="keywords" content="túi xách, túi thời trang, wishbag, cửa hàng túi xách, túi xách thiện nguyện">
   <meta name="author" content="Wishbag">
 
-  <!-- Open Graph / Facebook / Zalo Sharing -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Wishbag — Phụ Kiện Thời Trang & Dự Án Thiện Nguyện">
   <meta property="og:description" content="Mỗi chiếc túi bạn chọn tại Wishbag đều góp phần trao hy vọng đến trẻ em khó khăn vùng cao.">
@@ -19,6 +18,27 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* CSS cho Nút chọn hình thức mua hàng tại Checkout */
+    .order-type-container {
+      display: flex; gap: 10px; margin-bottom: 24px;
+    }
+    .order-type-container label {
+      flex: 1; text-align: center; padding: 12px;
+      border: 2px solid var(--color-border, #e5e7eb);
+      border-radius: 8px; cursor: pointer; font-weight: 600;
+      transition: all 0.2s ease; background: #fff;
+    }
+    .order-type-container input[type="radio"] { display: none; }
+    .order-type-container input[type="radio"]:checked + span {
+      color: var(--color-primary, #7c3aed);
+    }
+    .order-type-container label:has(input[type="radio"]:checked) {
+      border-color: var(--color-primary, #7c3aed);
+      background-color: #f5f3ff;
+    }
+  </style>
 </head>
 <body>
 
@@ -146,6 +166,7 @@
             <button type="button" class="tab-btn is-active" data-category="all" role="tab" aria-selected="true">Tất cả</button>
             <button type="button" class="tab-btn" data-category="𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀" role="tab" aria-selected="false">𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀</button>
             <button type="button" class="tab-btn" data-category="Summer Threads" role="tab" aria-selected="false">Summer Threads</button>
+            <button type="button" class="tab-btn" data-category="Jean Collection" role="tab" aria-selected="false">Jean Collection</button>
           </div>
 
           <div class="sort-control">
@@ -173,7 +194,7 @@
 
   </main>
 
-  <!-- Cart Drawer Overlay & Drawer -->
+  <!-- Cart Drawer -->
   <div class="drawer-overlay" id="drawer-overlay" hidden></div>
   <aside class="cart-drawer" id="cart-drawer" aria-label="Giỏ hàng" aria-hidden="true">
     <div class="cart-drawer-header">
@@ -220,18 +241,34 @@
         </button>
       </div>
       <form id="checkout-form" class="checkout-body">
+        
         <div class="form-group">
-          <label for="co-name">Họ và Tên *</label>
-          <input type="text" id="co-name" required placeholder="Nhập họ và tên người nhận">
+          <label>Hình thức mua hàng</label>
+          <div class="order-type-container">
+            <label>
+              <input type="radio" name="order_type" value="delivery" checked>
+              <span>Giao tận nơi</span>
+            </label>
+            <label>
+              <input type="radio" name="order_type" value="booth">
+              <span>Mua tại gian hàng</span>
+            </label>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="co-phone">Số điện thoại *</label>
-          <input type="tel" id="co-phone" required placeholder="Nhập số điện thoại (ví dụ: 0912345678)">
-          <span class="error-msg" id="phone-error"></span>
-        </div>
-        <div class="form-group">
-          <label for="co-address">Địa chỉ giao hàng *</label>
-          <input type="text" id="co-address" required placeholder="Số nhà, tên đường, Phường/Xã, Quận/Huyện...">
+
+        <div id="customer-info-section">
+          <div class="form-group">
+            <label for="co-name">Họ và Tên *</label>
+            <input type="text" id="co-name" required placeholder="Nhập họ và tên người nhận">
+          </div>
+          <div class="form-group">
+            <label for="co-phone">Số điện thoại *</label>
+            <input type="tel" id="co-phone" required placeholder="Nhập số điện thoại (ví dụ: 0912345678)">
+          </div>
+          <div class="form-group">
+            <label for="co-address">Địa chỉ giao hàng *</label>
+            <input type="text" id="co-address" required placeholder="Số nhà, tên đường, Phường/Xã, Quận/Huyện...">
+          </div>
         </div>
 
         <div class="form-group">
@@ -239,7 +276,7 @@
           <div class="payment-options">
             <label class="payment-radio">
               <input type="radio" name="payment_method" value="cod" checked>
-              <span>Thanh toán tiền mặt khi nhận hàng (COD)</span>
+              <span id="label-cod-text">Thanh toán tiền mặt khi nhận hàng (COD)</span>
             </label>
             <label class="payment-radio">
               <input type="radio" name="payment_method" value="transfer">
@@ -249,11 +286,11 @@
         </div>
 
         <div id="transfer-info" class="transfer-info-section" hidden>
-          <p class="transfer-note">Vui lòng quét mã QR bên dưới để thanh toán và tải lên ảnh chụp chuyển khoản thành công.</p>
+          <p class="transfer-note">Vui lòng quét mã QR bên dưới để thanh toán.</p>
           <div class="qr-container">
-            <img src="download.jpg" alt="Mã QR Chuyển Khoản Wishbag" class="qr-image">
+            <img src="" alt="Mã QR Chuyển Khoản Wishbag" class="qr-image">
           </div>
-          <div class="form-group mt-3">
+          <div class="form-group mt-3" id="receipt-upload-group">
             <label for="co-receipt">Tải lên ảnh biên lai chuyển khoản *</label>
             <input type="file" id="co-receipt" accept="image/*">
           </div>
@@ -263,33 +300,6 @@
           <button type="submit" class="btn btn-primary btn-full" id="submit-order-btn">Xác Nhận Đặt Hàng</button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Quick View Modal (Đã chuyển vào bên trong body) -->
-  <div class="quickview-overlay" id="quickview-overlay" hidden>
-    <div class="quickview-modal" id="quickview-modal" role="dialog" aria-modal="true">
-      <button type="button" class="icon-btn close-quickview" id="quickview-close-btn" aria-label="Đóng chi tiết">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-      <div class="quickview-content">
-        <div class="quickview-image-container">
-          <img id="qv-image" src="" alt="Sản phẩm Wishbag" class="crop-ui">
-        </div>
-        <div class="quickview-info">
-          <span id="qv-category" class="product-category"></span>
-          <h3 id="qv-title" class="product-title" style="font-size: 2rem; margin-bottom: 0.5rem;"></h3>
-          <p id="qv-price" class="product-price" style="font-size: 1.5rem; margin-bottom: 1rem;"></p>
-          
-          <div class="qv-variants" id="qv-variants-container" style="margin-bottom: 1rem;">
-            <label style="font-weight: 600; font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Màu sắc chọn lựa:</label>
-            <div class="color-options" id="qv-color-options"></div>
-          </div>
-
-          <p id="qv-desc" class="product-desc" style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;"></p>
-          <button type="button" class="btn btn-primary btn-full" id="qv-add-cart" data-action="add-to-cart" data-product-id="">Thêm vào giỏ</button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -323,19 +333,7 @@
           <li><a href="#">Chính Sách Bảo Mật</a></li>
         </ul>
       </div>
-
-      <div class="footer-col footer-newsletter">
-        <h3>Nhận thông tin mới nhất</h3>
-        <p>Chỉ gửi tin tức về bộ sưu tập mới và các hoạt động thiện nguyện.</p>
-        <form class="newsletter-form" id="newsletter-form">
-          <label for="newsletter-email" class="visually-hidden">Địa chỉ email</label>
-          <input type="email" id="newsletter-email" placeholder="ban@email.com" required>
-          <button type="submit" class="btn btn-primary">Đăng Ký</button>
-        </form>
-        <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
-      </div>
     </div>
-
     <div class="footer-bottom">
       <p>© 2026 Wishbag. Đã đăng ký bản quyền.</p>
     </div>
