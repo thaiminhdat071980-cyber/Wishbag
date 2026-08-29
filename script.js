@@ -3,17 +3,21 @@
 /* ==========================================================================
    Data & Constants
    ========================================================================== */
+// URL Google Apps Script mới (Đã cập nhật theo link của bạn)
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyr9f1EGEhmwUcL2072f7W1SWQIky2ELcYJIkfAKlsnJeHOfnJv6GvQojEjQ_irIn3_mw/exec";
+
+// Danh sách sản phẩm (Mặc định isSoldOut: false, sẽ được update tự động từ Sheet)
 const PRODUCTS = [
-  { id: 'p01', name: 'Lunar Heart', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lunar Heart.jpg', description: 'Wishbag' },
-  { id: 'p02', name: 'Lace Bound', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lace Bound.jpg', description: 'Wishbag' },
-  { id: 'p03', name: 'Pinky Promise', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Pinky Promise.jpg', description: 'Wishbag' },
-  { id: 'p08', name: 'Gift Basket', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'gift basket .jpg', description: 'Wishbag', isSoldOut: true },
-  { id: 'p09', name: 'Quiet Bloom', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Quiet Bloom (hết hàng).jpg', description: 'Wishbag', isSoldOut: true },
-  { id: 'p10', name: 'Jeanius - example', price: 199000, originalPrice: null, category: 'Jean Collection', image: 'Jeanius - example.jpg', description: 'Mỗi sản phẩm trong Jean Collection sẽ khác nhau, nên hình ảnh trên là hình ảnh minh họa' },
-  { id: 'p04', name: 'Aloha', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Aloha.jpg', description: 'Wishbag' },
-  { id: 'p05', name: 'Gentle Giant', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Gentle Giant.jpg', description: 'Wishbag' },
-  { id: 'p06', name: 'Ripple', price: 129000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag' },
-  { id: 'p07', name: 'Sunny Side', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Sunny Side.jpg', description: 'Wishbag' },
+  { id: 'p01', name: 'Lunar Heart', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lunar Heart.jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p02', name: 'Lace Bound', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lace Bound.jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p03', name: 'Pinky Promise', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Pinky Promise.jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p08', name: 'Gift Basket', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'gift basket .jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p09', name: 'Quiet Bloom', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Quiet Bloom (hết hàng).jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p10', name: 'Jeanius - example', price: 199000, originalPrice: null, category: 'Jeanius', image: 'Jeanius - example.jpg', description: 'Mỗi sản phẩm trong Jeanius Collection sẽ khác nhau, nên hình ảnh trên là hình ảnh minh họa', isSoldOut: false },
+  { id: 'p04', name: 'Aloha', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Aloha.jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p05', name: 'Gentle Giant', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Gentle Giant.jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p06', name: 'Ripple', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Ripple.jpg', description: 'Wishbag', isSoldOut: false },
+  { id: 'p07', name: 'Sunny Side', price: 99000, originalPrice: null, category: 'Summer Threads', image: 'Sunny Side.jpg', description: 'Wishbag', isSoldOut: false },
 ];
 
 const CART_STORAGE_KEY = 'wishbag_cart_v1';
@@ -61,6 +65,32 @@ function saveCheckoutInfo(name, phone, address) {
     localStorage.setItem(USER_INFO_KEY, JSON.stringify(info));
   } catch (e) {
     console.error("Không thể lưu thông tin:", e);
+  }
+}
+
+/* ==========================================================================
+   Fetch Inventory from Google Sheets (Đã tích hợp kiểm tra số lượng)
+   ========================================================================== */
+async function loadInventory() {
+  try {
+    const response = await fetch(WEB_APP_URL + "?t=" + new Date().getTime(), { cache: "no-store" });
+    const inventoryStatus = await response.json();
+    
+    // Cập nhật trạng thái số lượng cho các sản phẩm
+    PRODUCTS.forEach(p => {
+      if (inventoryStatus.hasOwnProperty(p.id)) {
+        // Đọc số lượng trả về từ sheet (đảm bảo chuyển sang kiểu số)
+        p.stock = parseInt(inventoryStatus[p.id], 10) || 0;
+        // Nếu số lượng <= 0 thì tính là hết hàng
+        p.isSoldOut = p.stock <= 0;
+      }
+    });
+    
+    // Render lại sản phẩm và giỏ hàng sau khi lấy được dữ liệu tồn kho
+    renderProducts();
+    renderCart();
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu tồn kho:", error);
   }
 }
 
@@ -189,7 +219,7 @@ function renderProducts() {
 }
 
 /* ==========================================================================
-   Cart rendering & Logic
+   Cart rendering & Logic (Đã tích hợp kiểm tra số lượng tồn kho)
    ========================================================================== */
 function getCartLines() {
   return cart.map(entry => {
@@ -255,14 +285,40 @@ function renderCart() {
 function addToCart(productId) {
   const product = findProduct(productId);
   if (!product) return;
+  if (product.isSoldOut) {
+    showToast(`❌ ${product.name} đã hết hàng!`);
+    return;
+  }
+  
   const existing = cart.find(entry => entry.id === productId);
-  if (existing) existing.quantity += 1; else cart.push({ id: productId, quantity: 1 });
-  renderCart(); showToast(`✅ Đã thêm ${product.name} vào giỏ!`);
+  
+  // KIỂM TRA SỐ LƯỢNG KHO: Không cho thêm quá số lượng tồn
+  if (existing && product.stock !== undefined && existing.quantity >= product.stock) {
+    showToast(`❌ Chỉ còn ${product.stock} chiếc ${product.name} trong kho!`);
+    return;
+  }
+  
+  if (existing) {
+    existing.quantity += 1; 
+  } else {
+    cart.push({ id: productId, quantity: 1 });
+  }
+  
+  renderCart(); 
+  showToast(`✅ Đã thêm ${product.name} vào giỏ!`);
 }
 
 function changeQuantity(productId, delta) {
   const entry = cart.find(item => item.id === productId);
-  if (!entry) return;
+  const product = findProduct(productId);
+  if (!entry || !product) return;
+  
+  // KIỂM TRA SỐ LƯỢNG KHO: Nếu bấm dấu (+) mà vượt kho thì chặn lại
+  if (delta > 0 && product.stock !== undefined && entry.quantity >= product.stock) {
+    showToast(`❌ Chỉ còn ${product.stock} chiếc trong kho!`);
+    return;
+  }
+
   entry.quantity += delta;
   if (entry.quantity <= 0) cart = cart.filter(item => item.id !== productId);
   renderCart();
@@ -333,31 +389,25 @@ function updateQRCode() {
   if (qrImage) qrImage.src = qrUrl;
 }
 
-// Lắng nghe thay đổi "Hình thức mua hàng" (Giao tận nơi / Mua tại gian hàng)
 if (orderTypeRadios) {
   orderTypeRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
       isAtBooth = (e.target.value === 'booth');
       
-      // Update lại giỏ hàng và mã QR theo số tiền mới (Không phí ship)
       renderCart();
       updateQRCode();
 
       if (isAtBooth) {
-        // Ẩn form thông tin khách hàng, bỏ bắt buộc
         if(customerInfoSection) customerInfoSection.style.display = 'none';
         if(coName) coName.required = false;
         if(coPhone) coPhone.required = false;
         if(coAddress) coAddress.required = false;
         
-        // Đổi tên nhãn thanh toán thành Tiền mặt
         if(labelCodText) labelCodText.textContent = 'Thanh toán tiền mặt tại gian hàng';
         
-        // Ẩn upload bill (nhân viên tự check tiền)
         if(receiptUploadGroup) receiptUploadGroup.style.display = 'none';
         if(coReceipt) coReceipt.required = false;
       } else {
-        // Hiện lại form thông tin khách hàng, đặt bắt buộc
         if(customerInfoSection) customerInfoSection.style.display = 'block';
         if(coName) coName.required = true;
         if(coPhone) coPhone.required = true;
@@ -365,7 +415,6 @@ if (orderTypeRadios) {
 
         if(labelCodText) labelCodText.textContent = 'Thanh toán tiền mặt khi nhận hàng (COD)';
         
-        // Nếu đang chọn chuyển khoản thì phải hiện lại nút upload biên lai (không bắt buộc nữa)
         if (document.querySelector('input[name="payment_method"]:checked').value === 'transfer') {
           if(receiptUploadGroup) receiptUploadGroup.style.display = 'block';
           if(coReceipt) coReceipt.required = false;
@@ -375,13 +424,11 @@ if (orderTypeRadios) {
   });
 }
 
-// Lắng nghe thay đổi Phương thức thanh toán (Tiền mặt / Chuyển khoản)
 if (paymentRadios) {
   paymentRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
       if (e.target.value === 'transfer') {
         if(transferInfo) transferInfo.hidden = false;
-        // Chỉ hiện nút upload biên lai nếu là Giao tận nơi (không bắt buộc)
         if (!isAtBooth) {
           if(receiptUploadGroup) receiptUploadGroup.style.display = 'block';
           if(coReceipt) coReceipt.required = false;
@@ -425,7 +472,6 @@ if (checkoutForm) {
     submitBtn.innerText = 'Đang xử lý...';
     submitBtn.style.opacity = '0.7'; submitBtn.style.pointerEvents = 'none'; 
     
-    // Đọc mã Bill hiện tại
     let currentBillNum = parseInt(localStorage.getItem(ORDER_COUNTER_KEY) || '1', 10);
     
     const paymentMethodValue = document.querySelector('input[name="payment_method"]:checked').value;
@@ -442,10 +488,12 @@ if (checkoutForm) {
       Chi_tiết_đơn_hàng: cart.map(item => {
         const p = findProduct(item.id);
         return p ? `${p.name} (Số lượng: ${item.quantity})` : '';
-      }).join(' | ')
+      }).join(' | '),
+      // Dữ liệu giỏ hàng để Apps Script tự động trừ kho
+      cartItems: cart 
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbwyXGj5f6qObPV21D8TYzOV4JNr8UB0Tyh1FDtdw17-tmH-Ljm97wg1ZhGhkFqArNMzkQ/exec", {
+    fetch(WEB_APP_URL, {
       method: "POST", 
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(orderData)
@@ -459,9 +507,8 @@ if (checkoutForm) {
         
         if (isAtBooth) {
           showToast(`🎉 Xong đơn Bill #${currentBillNum}!`);
-          localStorage.setItem(ORDER_COUNTER_KEY, currentBillNum + 1); // Tăng số thứ tự bill lên 1
+          localStorage.setItem(ORDER_COUNTER_KEY, currentBillNum + 1);
           
-          // Reset lại state sau khi mua xong
           isAtBooth = false;
           document.querySelector('input[name="order_type"][value="delivery"]').checked = true;
           if(customerInfoSection) customerInfoSection.style.display = 'block';
@@ -470,6 +517,9 @@ if (checkoutForm) {
         } else {
           showToast('🎉 Đặt hàng thành công! Wishbag sẽ liên hệ sớm.');
         }
+        
+        // Cập nhật lại tồn kho ngay sau khi đặt hàng
+        loadInventory();
         
       } else {
         showToast('❌ Có lỗi xảy ra, vui lòng thử lại sau.');
@@ -520,5 +570,7 @@ if (backToTopBtn) {
   backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
+// Khởi tạo hiển thị mặc định, sau đó gọi dữ liệu tồn kho cập nhật
 renderProducts();
 renderCart();
+loadInventory();
