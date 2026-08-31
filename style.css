@@ -134,7 +134,6 @@ button { cursor: pointer; }
 .search-bar input {
   padding: 0.5rem 1rem 0.5rem 2.5rem; background-color: var(--color-bg);
   border: 1px solid var(--color-border); border-radius: var(--radius-full);
-  /* Quan trọng: Sửa size lên 16px (1rem) để tránh iPhone tự zoom và nhích web lên */
   font-size: 1rem; 
   width: 180px; transition: all var(--transition-fast);
 }
@@ -185,7 +184,7 @@ button { cursor: pointer; }
 .hero-slide.active { opacity: 1; transform: scale(1); }
 .slider-overlay {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 45%, rgba(255,255,255,0.2) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.45) 100%);
   z-index: 1;
 }
 .slider-nav {
@@ -201,14 +200,67 @@ button { cursor: pointer; }
 .dot { width: 12px; height: 12px; background-color: rgba(124, 58, 237, 0.3); border-radius: 50%; cursor: pointer; transition: all 0.3s ease; }
 .dot.active { background-color: var(--color-primary); transform: scale(1.4); }
 
-.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 2; pointer-events: none; }
+.hero-inner { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  text-align: center; 
+  max-width: 850px; 
+  margin: 0 auto; 
+  position: relative; 
+  z-index: 2; 
+  pointer-events: none; 
+}
+.hero-copy { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%; 
+}
 .hero-inner a, .hero-inner button { pointer-events: auto; }
-.eyebrow { text-transform: uppercase; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--color-primary); margin-bottom: 0.75rem; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); }
-.hero h1 { font-family: var(--font-heading); font-size: 3.2rem; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
-.hero-tagline { font-size: 1.125rem; color: var(--color-text-main); font-weight: 500; margin-bottom: 2rem; max-width: 600px; }
-.trust-badges { display: flex; gap: 1.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(124, 58, 237, 0.2); }
-.trust-badges li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 600; }
-.hero-visual { position: relative; height: 380px; display: flex; align-items: center; justify-content: center; }
+.eyebrow { 
+  text-transform: uppercase; 
+  font-size: 0.85rem; 
+  font-weight: 700; 
+  letter-spacing: 0.1em; 
+  color: var(--color-primary); 
+  margin-bottom: 0.75rem; 
+  text-shadow: 0 1px 4px rgba(255,255,255,0.9); 
+}
+.hero h1 { 
+  font-family: var(--font-heading); 
+  font-size: 3.2rem; 
+  line-height: 1.15; 
+  letter-spacing: -0.02em; 
+  margin-bottom: 1.25rem; 
+  text-shadow: 0 2px 10px rgba(255,255,255,0.9); 
+}
+.hero-tagline { 
+  font-size: 1.125rem; 
+  color: var(--color-text-main); 
+  font-weight: 500; 
+  margin-bottom: 2rem; 
+  max-width: 650px; 
+  text-shadow: 0 1px 4px rgba(255,255,255,0.9); 
+}
+.trust-badges { 
+  display: flex; 
+  gap: 1.5rem; 
+  margin-top: 2.5rem; 
+  padding-top: 2rem; 
+  border-top: 1px solid rgba(124, 58, 237, 0.2); 
+  justify-content: center; 
+  width: 100%;
+}
+.trust-badges li { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+  font-size: 0.875rem; 
+  font-weight: 600; 
+  text-shadow: 0 1px 3px rgba(255,255,255,0.9); 
+}
+.hero-visual { display: none; }
 .hero-orb { width: 280px; height: 280px; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%); border-radius: var(--radius-full); opacity: 0.25; filter: blur(50px); }
 
 /* ==========================================================================
@@ -361,11 +413,11 @@ button { cursor: pointer; }
 .back-to-top:hover { background-color: var(--color-primary-hover); transform: translateY(-3px); }
 
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-inner { flex-direction: column; text-align: center; }
   .hero-copy { display: flex; flex-direction: column; align-items: center; }
   .trust-badges { justify-content: center; }
   .slider-overlay {
-    background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.92) 50%, rgba(255,255,255,0.85) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.45) 100%);
   }
   .hero-visual { display: none; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -374,7 +426,6 @@ button { cursor: pointer; }
 @media (max-width: 680px) {
   .main-nav { display: none; }
   .menu-toggle { display: flex; }
-  /* Cho phép icon và search thu gọn tránh rớt dòng */
   .logo-text { font-size: 1.4rem; }
   .header-actions { gap: 0.65rem; }
   .search-bar input { width: 120px; font-size: 16px; padding-left: 2.2rem; }
@@ -389,9 +440,7 @@ button { cursor: pointer; }
   .toast-container { width: 90%; }
   .toast { font-size: 0.9rem; padding: 0.85rem 1.25rem; }
 }
-
 @media (max-width: 420px) {
-  /* Tắt hẳn chữ logo trên đt thật bé để chừa chỗ cho Search & Cart */
   .logo-text { display: none; }
   .search-bar input { width: 140px; }
   .search-bar input:focus { width: 160px; }

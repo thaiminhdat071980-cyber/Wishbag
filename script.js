@@ -552,7 +552,6 @@ if (cartOpenBtn) cartOpenBtn.addEventListener('click', openCartDrawer);
 if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCartDrawer);
 if (drawerOverlay) drawerOverlay.addEventListener('click', closeCartDrawer);
 
-/* Bắt sự kiện tìm kiếm sản phẩm và chống nhích màn hình khi Enter */
 if (searchInput) {
   searchInput.addEventListener('input', (e) => {
     searchTerm = e.target.value;
@@ -561,12 +560,11 @@ if (searchInput) {
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      searchInput.blur(); // Tắt bàn phím ảo điện thoại
+      searchInput.blur();
     }
   });
 }
 
-/* Logic cho Mobile Menu */
 if (menuToggle && mobileNav) {
   menuToggle.addEventListener('click', () => {
     const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
@@ -575,13 +573,11 @@ if (menuToggle && mobileNav) {
   });
 }
 
-/* Sửa lỗi mượt mà cho nút Trang chủ và scroll to top */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const targetId = this.getAttribute('href');
     if (targetId === '#') return;
     
-    // Nếu bấm "#top" hoặc Trang chủ
     if (targetId === '#top') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -593,7 +589,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       }
     }
     
-    // Tự động đóng menu trên điện thoại khi chọn 1 link
     if (mobileNav && mobileNav.classList.contains('is-open')) {
       mobileNav.classList.remove('is-open');
       if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
@@ -606,7 +601,6 @@ if (backToTopBtn) {
   backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-// Khởi tạo hiển thị mặc định
 renderProducts();
 renderCart();
 loadInventory();
