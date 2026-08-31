@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#7c3aed">
   <title>Wishbag — Phụ Kiện Thời Trang & Dự Án Thiện Nguyện</title>
   <meta name="description" content="Wishbag cung cấp những mẫu túi xách độc đáo, thời trang — giao hàng nhanh chóng và đồng hành cùng các hoạt động thiện nguyện vùng cao.">
@@ -31,20 +31,17 @@
       transition: all 0.2s ease; background: #fff;
     }
     .order-type-container input[type="radio"] { display: none; }
-    .order-type-container input[type="radio"]:checked + span {
-      color: var(--color-primary, #7c3aed);
-    }
+    .order-type-container input[type="radio"]:checked + span { color: var(--color-primary, #7c3aed); }
     .order-type-container label:has(input[type="radio"]:checked) {
-      border-color: var(--color-primary, #7c3aed);
-      background-color: #f5f3ff;
+      border-color: var(--color-primary, #7c3aed); background-color: #f5f3ff;
     }
   </style>
 </head>
-<body>
+<body id="top">
 
   <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
 
-  <header class="site-header" id="top">
+  <header class="site-header">
     <div class="header-inner">
       <a href="#top" class="logo" aria-label="Trang chủ Wishbag" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
         <img src="480310326_122100816464768937_246419539453401985_n.jpg" alt="Túi xách thời trang Wishbag Logo" class="brand-logo" width="52" height="52" onerror="this.style.display='none';">
@@ -67,11 +64,11 @@
             <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
           <label for="search-input" class="visually-hidden">Tìm kiếm sản phẩm</label>
-          <input type="search" id="search-input" placeholder="Tìm kiếm sản phẩm…" autocomplete="off">
+          <input type="search" id="search-input" placeholder="Tìm kiếm..." autocomplete="off">
         </div>
 
-        <button type="button" class="cart-btn" id="cart-open-btn" aria-label="Mở giỏ hàng, 0 sản phẩm">
-          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <button type="button" class="cart-btn" id="cart-open-btn" aria-label="Mở giỏ hàng">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.8h7.6a2 2 0 0 0 2-1.6L21 8H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="9.5" cy="20.5" r="1.4" fill="currentColor"/>
             <circle cx="17.5" cy="20.5" r="1.4" fill="currentColor"/>
@@ -166,7 +163,6 @@
             <button type="button" class="tab-btn is-active" data-category="all" role="tab" aria-selected="true">Tất cả</button>
             <button type="button" class="tab-btn" data-category="𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀" role="tab" aria-selected="false">𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀</button>
             <button type="button" class="tab-btn" data-category="Summer Threads" role="tab" aria-selected="false">Summer Threads</button>
-            <!-- Đổi tên từ Jean Collection thành Jeanius -->
             <button type="button" class="tab-btn" data-category="Jeanius" role="tab" aria-selected="false">Jeanius</button>
           </div>
 

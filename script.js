@@ -3,10 +3,8 @@
 /* ==========================================================================
    Data & Constants
    ========================================================================== */
-// URL Google Apps Script mới (Đã cập nhật theo link của bạn)
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyr9f1EGEhmwUcL2072f7W1SWQIky2ELcYJIkfAKlsnJeHOfnJv6GvQojEjQ_irIn3_mw/exec";
 
-// Danh sách sản phẩm (Mặc định isSoldOut: false, sẽ được update tự động từ Sheet)
 const PRODUCTS = [
   { id: 'p01', name: 'Lunar Heart', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lunar Heart.jpg', description: 'Wishbag', isSoldOut: false },
   { id: 'p02', name: 'Lace Bound', price: 99000, originalPrice: null, category: '𝑺𝑾𝑬𝑬𝑻 𝑮𝑶𝑻𝑯𝑰𝑪 𝑾𝑯𝑰𝑴𝑺𝒀', image: 'Lace Bound.jpg', description: 'Wishbag', isSoldOut: false },
@@ -22,7 +20,7 @@ const PRODUCTS = [
 
 const CART_STORAGE_KEY = 'wishbag_cart_v1';
 const USER_INFO_KEY = 'wishbag_user_info'; 
-const ORDER_COUNTER_KEY = 'wishbag_booth_order_counter'; // Lưu số đếm bill tại gian hàng
+const ORDER_COUNTER_KEY = 'wishbag_booth_order_counter'; 
 const SHIPPING_FLAT_RATE = 30000;
 const FREE_SHIPPING_THRESHOLD = 500000;
 const TOAST_DURATION_MS = 4000;
@@ -34,7 +32,7 @@ let cart = loadCart();
 let activeCategory = 'all';
 let activeSort = 'default';
 let searchTerm = '';
-let isAtBooth = false; // Trạng thái: Mua trực tiếp tại gian hàng
+let isAtBooth = false; 
 
 /* ==========================================================================
    Utilities
@@ -69,24 +67,20 @@ function saveCheckoutInfo(name, phone, address) {
 }
 
 /* ==========================================================================
-   Fetch Inventory from Google Sheets (Đã tích hợp kiểm tra số lượng)
+   Fetch Inventory from Google Sheets
    ========================================================================== */
 async function loadInventory() {
   try {
     const response = await fetch(WEB_APP_URL + "?t=" + new Date().getTime(), { cache: "no-store" });
     const inventoryStatus = await response.json();
     
-    // Cập nhật trạng thái số lượng cho các sản phẩm
     PRODUCTS.forEach(p => {
       if (inventoryStatus.hasOwnProperty(p.id)) {
-        // Đọc số lượng trả về từ sheet (đảm bảo chuyển sang kiểu số)
         p.stock = parseInt(inventoryStatus[p.id], 10) || 0;
-        // Nếu số lượng <= 0 thì tính là hết hàng
         p.isSoldOut = p.stock <= 0;
       }
     });
     
-    // Render lại sản phẩm và giỏ hàng sau khi lấy được dữ liệu tồn kho
     renderProducts();
     renderCart();
   } catch (error) {
@@ -116,7 +110,6 @@ const cartSubtotalEl = document.getElementById('cart-subtotal');
 const cartShippingEl = document.getElementById('cart-shipping');
 const cartTotalEl = document.getElementById('cart-total');
 const checkoutBtn = document.getElementById('checkout-btn');
-const cartEmptyShopLink = document.getElementById('cart-empty-shop-link');
 const toastContainer = document.getElementById('toast-container');
 const menuToggle = document.getElementById('menu-toggle');
 const mobileNav = document.getElementById('main-nav-mobile');
@@ -219,7 +212,7 @@ function renderProducts() {
 }
 
 /* ==========================================================================
-   Cart rendering & Logic (Đã tích hợp kiểm tra số lượng tồn kho)
+   Cart rendering & Logic
    ========================================================================== */
 function getCartLines() {
   return cart.map(entry => {
@@ -232,7 +225,6 @@ function getCartLines() {
 function getCartTotals(lines) {
   const subtotal = lines.reduce((sum, line) => sum + line.price * line.quantity, 0);
   const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0);
-  // PHÍ SHIP: Miễn phí nếu mua tại gian hàng (isAtBooth = true) hoặc đạt ngưỡng freeship
   const shipping = (itemCount === 0 || subtotal >= FREE_SHIPPING_THRESHOLD || isAtBooth) ? 0 : SHIPPING_FLAT_RATE;
   return { subtotal, shipping, total: subtotal + shipping, itemCount };
 }
@@ -275,7 +267,6 @@ function renderCart() {
     if (cartSubtotalEl) cartSubtotalEl.textContent = formatMoney(totals.subtotal);
     if (cartShippingEl) cartShippingEl.textContent = totals.shipping === 0 ? 'Miễn phí' : formatMoney(totals.shipping);
     
-    // Cập nhật giá trị hiển thị thành tiền
     if (cartTotalEl) cartTotalEl.textContent = formatMoney(totals.total);
     if (checkoutModalTotal) checkoutModalTotal.textContent = formatMoney(totals.total);
   }
@@ -292,7 +283,6 @@ function addToCart(productId) {
   
   const existing = cart.find(entry => entry.id === productId);
   
-  // KIỂM TRA SỐ LƯỢNG KHO: Không cho thêm quá số lượng tồn
   if (existing && product.stock !== undefined && existing.quantity >= product.stock) {
     showToast(`❌ Chỉ còn ${product.stock} chiếc ${product.name} trong kho!`);
     return;
@@ -313,7 +303,6 @@ function changeQuantity(productId, delta) {
   const product = findProduct(productId);
   if (!entry || !product) return;
   
-  // KIỂM TRA SỐ LƯỢNG KHO: Nếu bấm dấu (+) mà vượt kho thì chặn lại
   if (delta > 0 && product.stock !== undefined && entry.quantity >= product.stock) {
     showToast(`❌ Chỉ còn ${product.stock} chiếc trong kho!`);
     return;
@@ -489,7 +478,6 @@ if (checkoutForm) {
         const p = findProduct(item.id);
         return p ? `${p.name} (Số lượng: ${item.quantity})` : '';
       }).join(' | '),
-      // Dữ liệu giỏ hàng để Apps Script tự động trừ kho
       cartItems: cart 
     };
 
@@ -518,7 +506,6 @@ if (checkoutForm) {
           showToast('🎉 Đặt hàng thành công! Wishbag sẽ liên hệ sớm.');
         }
         
-        // Cập nhật lại tồn kho ngay sau khi đặt hàng
         loadInventory();
         
       } else {
@@ -532,7 +519,7 @@ if (checkoutForm) {
 }
 
 /* ==========================================================================
-   Event delegation
+   Event delegation & Core Logic
    ========================================================================== */
 if (productGrid) {
   productGrid.addEventListener('click', event => {
@@ -565,12 +552,61 @@ if (cartOpenBtn) cartOpenBtn.addEventListener('click', openCartDrawer);
 if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCartDrawer);
 if (drawerOverlay) drawerOverlay.addEventListener('click', closeCartDrawer);
 
+/* Bắt sự kiện tìm kiếm sản phẩm và chống nhích màn hình khi Enter */
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    renderProducts();
+  });
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      searchInput.blur(); // Tắt bàn phím ảo điện thoại
+    }
+  });
+}
+
+/* Logic cho Mobile Menu */
+if (menuToggle && mobileNav) {
+  menuToggle.addEventListener('click', () => {
+    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', !isExpanded);
+    mobileNav.classList.toggle('is-open');
+  });
+}
+
+/* Sửa lỗi mượt mà cho nút Trang chủ và scroll to top */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    // Nếu bấm "#top" hoặc Trang chủ
+    if (targetId === '#top') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    // Tự động đóng menu trên điện thoại khi chọn 1 link
+    if (mobileNav && mobileNav.classList.contains('is-open')) {
+      mobileNav.classList.remove('is-open');
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+
 if (backToTopBtn) {
   window.addEventListener('scroll', () => backToTopBtn.classList.toggle('is-visible', window.scrollY > 300));
   backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-// Khởi tạo hiển thị mặc định, sau đó gọi dữ liệu tồn kho cập nhật
+// Khởi tạo hiển thị mặc định
 renderProducts();
 renderCart();
 loadInventory();
