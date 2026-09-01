@@ -24,9 +24,10 @@
   --radius-lg: 16px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(124, 58, 237, 0.1);
-  --shadow-lg: 0 12px 24px rgba(124, 58, 237, 0.2);
+  /* Thay thế các dòng shadow cũ bằng 3 dòng này */
+  --shadow-sm: 0 2px 4px rgba(30, 27, 75, 0.05);
+  --shadow-md: 0 4px 6px rgba(30, 27, 75, 0.05), 0 10px 15px rgba(124, 58, 237, 0.08);
+  --shadow-lg: 0 10px 15px rgba(30, 27, 75, 0.05), 0 20px 25px rgba(124, 58, 237, 0.15), 0 0 40px rgba(124, 58, 237, 0.05);
 
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s ease;
@@ -445,4 +446,64 @@ button { cursor: pointer; }
   .search-bar input { width: 140px; }
   .search-bar input:focus { width: 160px; }
   .hero h1 { font-size: 1.95rem; }
+}
+
+/* --- HIỆU ỨNG TEXT XUẤT HIỆN MƯỢT MÀ TẠI HERO --- */
+@keyframes fadeUpIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-copy > * {
+  animation: fadeUpIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* Tạo độ trễ (delay) cho từng thành phần để chúng hiện lên theo thứ tự */
+.hero-copy p.eyebrow { animation-delay: 0.1s; }
+.hero-copy h1 { animation-delay: 0.3s; }
+.hero-copy p.hero-tagline { animation-delay: 0.5s; }
+.hero-copy .btn { animation-delay: 0.7s; }
+.hero-copy .trust-badges { animation-delay: 0.9s; }
+
+
+/* --- HIỆU ỨNG SHINE (LẤP LÁNH) CHO NÚT MUA HÀNG --- */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.btn-primary:hover::after {
+  left: 150%;
+}
+
+/* --- HIỆU ỨNG CUỘN TRANG (SCROLL REVEAL) --- */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes badgePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+.cart-badge.pop-anim {
+  animation: badgePop 0.3s ease-in-out;
 }

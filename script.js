@@ -255,6 +255,11 @@ function renderCart() {
   const lines = getCartLines();
   const totals = getCartTotals(lines);
   if (cartBadge) cartBadge.textContent = String(totals.itemCount);
+  // Hiệu ứng nảy giỏ hàng
+  if (cartBadge) {
+    cartBadge.classList.add('pop-anim');
+    setTimeout(() => cartBadge.classList.remove('pop-anim'), 300);
+  }
   
   if (lines.length === 0) {
     if (cartEmptyState) cartEmptyState.style.display = 'flex';
@@ -604,3 +609,46 @@ if (backToTopBtn) {
 renderProducts();
 renderCart();
 loadInventory();
+
+/* ==========================================================================
+   Aesthetic Enhancements (Scroll Reveal)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // Chỉ hiện 1 lần
+      }
+    });
+  }, observerOptions);
+
+  // Gắn hiệu ứng cho các section có sẵn
+  const staticElements = document.querySelectorAll('.about-inner, .shop-header');
+  staticElements.forEach(el => {
+    el.classList.add('reveal-item');
+    observer.observe(el);
+  });
+
+  // Tạo proxy cho hàm renderProducts để gắn hiệu ứng cho sản phẩm mỗi khi load/lọc
+  if (typeof renderProducts === 'function') {
+    const originalRenderProducts = renderProducts;
+    renderProducts = function() {
+      originalRenderProducts(); // Chạy logic render gốc
+      
+      // Thêm hiệu ứng cho các card vừa được render
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach((card, index) => {
+        card.classList.add('reveal-item');
+        // Tạo độ trễ xếp tầng để các card hiện lên lần lượt (staggered effect)
+        card.style.transitionDelay = `${index * 0.05}s`;
+        observer.observe(card);
+      });
+    };
+  }
+});
